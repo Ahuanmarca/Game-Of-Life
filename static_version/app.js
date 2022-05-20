@@ -1,26 +1,31 @@
-const boardSize = 40;
-
-// Populate Game Board with random dear or alive cells (40x40 grid)
-const frontBoard = document.querySelector("#gameBoard")
-const backBoard = []
-for (i = 0; i < boardSize; i++) {
-    const row = []
-    for (j = 0; j < boardSize; j++) {
-        const position = [i, j];
-        const life = Math.random() > 0.5 ? 1 : 0;
-        const cell = document.createElement("div");
-        row.push({life: life, cell: cell, position: position});
-        frontBoard.appendChild(cell);
-    }
-    backBoard.push(row)
+const boardProperties = {
+    boardSize: 40
 }
 
-// Turn all dead cells to black
-turnDeadCellsToBlack(backBoard);
+// Create gameBoard representation, all cells are dead
+const backBoard = createBackBoard(boardProperties.boardSize);
 
-// setInterval(() => {
-//     nextGeneration();
-// }, 1000)
+// Create a grid in the DOM, populate it with the backBoard cells
+const frontBoard = document.querySelector("#gameBoard");
+for (i = 0; i < boardProperties.boardSize; i++) {
+    for (j = 0; j < boardProperties.boardSize; j++) {
+        frontBoard.appendChild(backBoard[i][j].cell);
+    }
+}
+
+// Fill backBoard with random death of alive cells
+function randomizeCells() {
+    for (row of backBoard) {
+        for (cell of row) {
+            const life = Math.random() > 0.5 ? 1 : 0;
+            cell.life = life
+        }
+    }
+}
+randomizeCells();
+
+// Turn dead cells to black, alive cells to white
+turnDeadCellsToBlack(backBoard);
 
 function nextGeneration() {
 
@@ -33,8 +38,8 @@ function nextGeneration() {
     const temporalGrid = generateTemporalGrid();
 
     // Iterate current board
-    for (i = 0; i < boardSize; i++) {
-        for (j = 0; j < boardSize; j++) {
+    for (i = 0; i < boardProperties.boardSize; i++) {
+        for (j = 0; j < boardProperties.boardSize; j++) {
             
             // Remember if cell is alive or dead
             const isAlive = backBoard[i][j].life
@@ -64,8 +69,8 @@ function nextGeneration() {
     }
     // console.log(temporalGrid);
 
-    for (i = 0; i < boardSize; i++) {
-        for (j = 0; j < boardSize; j++) {
+    for (i = 0; i < boardProperties.boardSize; i++) {
+        for (j = 0; j < boardProperties.boardSize; j++) {
             backBoard[i][j].life = temporalGrid[i][j]
         }
     }
@@ -73,4 +78,37 @@ function nextGeneration() {
     turnDeadCellsToBlack(backBoard);
 }
 
+
+/*
+██████╗ ██╗   ██╗████████╗████████╗ ██████╗ ███╗   ██╗███████╗
+██╔══██╗██║   ██║╚══██╔══╝╚══██╔══╝██╔═══██╗████╗  ██║██╔════╝
+██████╔╝██║   ██║   ██║      ██║   ██║   ██║██╔██╗ ██║███████╗
+██╔══██╗██║   ██║   ██║      ██║   ██║   ██║██║╚██╗██║╚════██║
+██████╔╝╚██████╔╝   ██║      ██║   ╚██████╔╝██║ ╚████║███████║
+╚═════╝  ╚═════╝    ╚═╝      ╚═╝    ╚═════╝ ╚═╝  ╚═══╝╚══════╝
+*/
+
+const startButton = document.querySelector("#start");
+const stopButton = document.querySelector("#stop");
+const resetButton = document.querySelector("#reset");
+
+let intervalID = undefined;
+
+startButton.addEventListener("click", () => {
+    if (intervalID) {
+        clearInterval(intervalID)
+    }
+    intervalID = setInterval(() => {
+        nextGeneration();
+    }, 100);
+});
+
+stopButton.addEventListener("click", () => {
+    clearInterval(intervalID)
+});
+
+resetButton.addEventListener("click", () => {
+    randomizeCells();
+    turnDeadCellsToBlack(backBoard);
+});
 

@@ -15,9 +15,15 @@ const checkNeighbours = (cell, board) => {
             }
         }
     }
-
     return aliveNeighbours;
 }
+
+
+
+
+
+
+
 
 
 

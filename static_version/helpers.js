@@ -1,3 +1,22 @@
+// Count how many alive cells surround the current cell
+//      Arguments: the individual cell and the whole board, to check neighbours :/
+const checkNeighbours = (cell, board) => {
+    const i = cell.position[0];
+    const j = cell.position[1];
+    let aliveNeighbours = 0;
+
+    const coordinatesChecklist = getCoordinatesChecklist(i, j);
+
+    for (coordinate of coordinatesChecklist) {
+        if (isInsideBoard(coordinate)) {
+            if (board[coordinate[0]][coordinate[1]].life == 1) {
+                aliveNeighbours++;
+            }
+        }
+    }
+    return aliveNeighbours;
+}
+
 // Return empty temporal grid
 const generateTemporalGrid = (size = 40) => {
     const tmpGrid = [];
@@ -34,13 +53,9 @@ function getCoordinatesChecklist(i, j) {
     return coordinatesChecklist;
 }
 
-// Turn all dead cells to black
-// Turn all dead cells to black
-
+// Turn dead cells to black and alive cells to white
 function turnDeadCellsToBlack(backBoard) {
-
     const boardSize = backBoard.length;
-
     for (i = 0; i < boardSize; i++) {
         for (j = 0; j < boardSize; j++) {
             if (backBoard[i][j].life == 0) {
