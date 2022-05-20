@@ -1,9 +1,4 @@
 
-
-
-
-
-
     // corner 1
     let aliveNeighbours = 0
     if (board[0][1].life == 1) aliveNeighbours++

@@ -16,13 +16,7 @@ for (i = 0; i < boardSize; i++) {
 }
 
 // Turn all dead cells to black
-for (i = 0; i < boardSize; i++) {
-    for (j = 0; j < boardSize; j++) {
-        if (backBoard[i][j].life == 0) {
-            backBoard[i][j].cell.style.backgroundColor = "black";
-        }
-    }
-}
+turnDeadCellsToBlack(backBoard);
 
 // setInterval(() => {
 //     nextGeneration();
@@ -41,15 +35,42 @@ function nextGeneration() {
     // Iterate current board
     for (i = 0; i < boardSize; i++) {
         for (j = 0; j < boardSize; j++) {
+            
             // Remember if cell is alive or dead
             const isAlive = backBoard[i][j].life
-            
+
             // Count alive neighbours
-            const aliveNeighbours = checkNeighbours(backBoard[i][j]);
-            // console.log(aliveNeighbours)
+            const aliveNeighbours = checkNeighbours(backBoard[i][j], backBoard);
             
+            // Save new cell status to Temporal Grid
+            if (isAlive == 1) {
+                if (aliveNeighbours == 2 || aliveNeighbours == 3) {
+                    temporalGrid[i][j] = 1
+                } else {
+                    temporalGrid[i][j] = 0
+                }
+            } else {
+                if (aliveNeighbours == 3) {
+                    temporalGrid[i][j] = 1
+                } else {
+                    temporalGrid[i][j] = 0
+                }
+            }
+
             // Console Logs
             // console.log(isAlive)
+            // console.log(aliveNeighbours)
         }
     }
+    // console.log(temporalGrid);
+
+    for (i = 0; i < boardSize; i++) {
+        for (j = 0; j < boardSize; j++) {
+            backBoard[i][j].life = temporalGrid[i][j]
+        }
+    }
+
+    turnDeadCellsToBlack(backBoard);
 }
+
+
