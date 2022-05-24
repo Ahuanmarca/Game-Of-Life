@@ -1,3 +1,5 @@
+// PUSHING FROM UBUNTU TEST ...
+
 const boardProperties = {
     boardSize: 40
 }
