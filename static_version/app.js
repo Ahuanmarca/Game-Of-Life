@@ -1,4 +1,4 @@
-// PUSHING FROM UBUNTU TEST ...
+// PUSHING FROM UBUNTU TERMINAL
 
 const boardProperties = {
     boardSize: 40
