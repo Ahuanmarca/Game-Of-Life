@@ -1,4 +1,4 @@
-// PUSHING FROM UBUNTU TERMINAL
+// PUSHING FROM UBUNTU TERMINAL (CREDENTIALS CACHE?)
 
 const boardProperties = {
     boardSize: 40
