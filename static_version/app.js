@@ -20,19 +20,10 @@ for (i = 0; i < boardProperties.boardSize; i++) {
     }
 }
 
-// Fill backBoard with random death of alive cells
-function randomizeCells(backBoard) {
-    for (row of backBoard) {
-        for (cell of row) {
-            const life = Math.random() > 0.5 ? 1 : 0;
-            cell.life = life
-        }
-    }
-}
 randomizeCells(backBoard);
 
 // Turn dead cells to black, alive cells to white
-turnDeadCellsToBlack(backBoard);
+turn_DeathBlack_AliveWhite(backBoard);
 
 function nextGeneration() {
 
@@ -82,7 +73,7 @@ function nextGeneration() {
         }
     }
 
-    turnDeadCellsToBlack(backBoard);
+    turn_DeathBlack_AliveWhite(backBoard);
 }
 
 
@@ -118,7 +109,7 @@ stopButton.addEventListener("click", () => {
 
 resetButton.addEventListener("click", () => {
     randomizeCells(backBoard);
-    turnDeadCellsToBlack(backBoard);
+    turn_DeathBlack_AliveWhite(backBoard);
 });
 
 clearAllButton.addEventListener("click", () => {
@@ -127,50 +118,40 @@ clearAllButton.addEventListener("click", () => {
             cell.life = 0;
         }
     }
-    turnDeadCellsToBlack(backBoard);
+    turn_DeathBlack_AliveWhite(backBoard);
 });
 
 boardSizeForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const newSize = event.target.elements.boardSizeInput.value;
-    console.log(newSize);
 
-    // Rebuild the board
+    // Rebuild the backBoard
+    backBoard = createBackBoard(newSize);
+    randomizeCells(backBoard);
+    
+    // Rebuild the frontBoard
     
     // Remove all childs from the frontBoard
-    let toRemove = frontBoard.firstElementChild;
-    while (toRemove) {
-        frontBoard.removeChild(toRemove);
-        toRemove = frontBoard.firstElementChild;
+    while (frontBoard.firstElementChild) {
+        frontBoard.removeChild(frontBoard.firstElementChild);
     }
-
-    // Remove all elements from backBoard
-    // while(backBoard[0]) {
-        // backBoard.pop();
-    // }
-
-    // Replace backboard with new sized backboard
-    // let newBackboard = null;
-    const newBackBoard = createBackBoard(newSize);
-    console.log(newBackBoard)
-
+    
     // Change the CSS size of the board
     let newSizeStr = `${10 * newSize}px`;
     frontBoard.style.width = newSizeStr;
     frontBoard.style.height = newSizeStr;
-
+    
+    // Append new childs to the frontBoard
     for (i = 0; i < newSize; i++) {
         for (j = 0; j < newSize; j++) {
-            frontBoard.appendChild(newBackBoard[i][j].cell);
+            frontBoard.appendChild(backBoard[i][j].cell);
         }
     }
 
-    // Randomice alive and dead cells
-    randomizeCells(newBackBoard);
-
-    // Turn dead cells to black, alive cells to white
-    turnDeadCellsToBlack(newBackBoard);
+    // Turn death cells to black and white cells to white
+    turn_DeathBlack_AliveWhite(backBoard);    
 
     // Update size propertie at the top
     boardProperties.boardSize= newSize;
+    console.log(boardProperties.boardSize);
 });

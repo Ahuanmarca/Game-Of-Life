@@ -54,7 +54,7 @@ function getCoordinatesChecklist(i, j) {
 }
 
 // Turn dead cells to black and alive cells to white
-function turnDeadCellsToBlack(backBoard) {
+function turn_DeathBlack_AliveWhite(backBoard) {
     const boardSize = backBoard.length;
     for (i = 0; i < boardSize; i++) {
         for (j = 0; j < boardSize; j++) {
@@ -63,6 +63,17 @@ function turnDeadCellsToBlack(backBoard) {
             } else {
                 backBoard[i][j].cell.style.backgroundColor = "white";
             }
+        }
+    }
+}
+
+
+// Fill backBoard with random death of alive cells
+function randomizeCells(backBoard) {
+    for (row of backBoard) {
+        for (cell of row) {
+            const life = Math.random() > 0.5 ? 1 : 0;
+            cell.life = life
         }
     }
 }
