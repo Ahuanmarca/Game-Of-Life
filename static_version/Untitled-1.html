@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>ejemplo de preventDefault</title>
+
+        <script type="text/javascript">
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const checkbox = document.querySelector("#checkbox");
+                checkbox.addEventListener("click", (event) => {
+                    console.log("prevented!");
+                    event.preventDefault();
+                });
+
+            })
+
+            // function stopDefAction(evt) {
+            //     console.log("prevented!");
+            //     evt.preventDefault();
+            // }
+        </script>
+    </head>
+
+    <body>
+
+        <p>Por favor, haz clic sobre la caja de selección.</p>
+
+        <form>
+            <!-- <input id="checkbox" type="checkbox" onclick="stopDefAction(event);"/> -->
+            <input id="checkbox" type="checkbox">
+            <label for="checkbox">Selección</label>
+        </form>
+
+    </body>
+</html>
