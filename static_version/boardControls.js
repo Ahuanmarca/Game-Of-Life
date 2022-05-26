@@ -5,7 +5,6 @@
 //          - It's coordinates / position inside the grid
 function createBackBoard(boardSize = 40) {
     const backBoard = [];
-    console.log(boardSize)
     for (i = 0; i < boardSize; i++) {
         const row = []
         for (j = 0; j < boardSize; j++) {
@@ -19,7 +18,6 @@ function createBackBoard(boardSize = 40) {
             cell.classList.add(`${iString},${jString}`);
 
             cell.addEventListener("click", function(event){
-
                 toggleCellLife(backBoard, event);
             });
 
@@ -30,7 +28,6 @@ function createBackBoard(boardSize = 40) {
     return backBoard;
 }
 
-// Toggle Alive / Dead Cells
 function toggleCellLife(backBoard, event) {
     
     const i = event.target.classList[0].split(",")[0]
@@ -47,4 +44,3 @@ function toggleCellLife(backBoard, event) {
     }
     turnDeadCellsToBlack(backBoard);
 }
-
