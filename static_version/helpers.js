@@ -8,7 +8,7 @@ const checkNeighbours = (cell, board) => {
     const coordinatesChecklist = getCoordinatesChecklist(i, j);
 
     for (coordinate of coordinatesChecklist) {
-        if (isInsideBoard(coordinate)) {
+        if (isInsideBoard(coordinate, board.length)) {
             if (board[coordinate[0]][coordinate[1]].life == 1) {
                 aliveNeighbours++;
             }
@@ -31,8 +31,8 @@ const generateTemporalGrid = (size = 40) => {
 }
 
 // Check if a coordinate is inside the board (or not)
-const isInsideBoard = (coordinate) => {
-    if (coordinate[0] < 0 || coordinate[1] < 0 || coordinate[0] > 39|| coordinate[1] > 39) {
+const isInsideBoard = (coordinate, boardLength) => {
+    if (coordinate[0] < 0 || coordinate[1] < 0 || coordinate[0] > boardLength - 1|| coordinate[1] > boardLength - 1) {
         return false;
     } else {
         return true;

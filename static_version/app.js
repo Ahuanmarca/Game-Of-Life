@@ -1,14 +1,18 @@
-// PUSHING FROM UBUNTU TERMINAL (CREDENTIALS CACHE?)
-
 const boardProperties = {
-    boardSize: 40
+    boardSize: 50
 }
+
 
 // Create gameBoard representation, all cells are dead
 const backBoard = createBackBoard(boardProperties.boardSize);
 
 // Create a grid in the DOM, populate it with the backBoard cells
 const frontBoard = document.querySelector("#gameBoard");
+
+let modifiedSize = `${10 * boardProperties.boardSize}px`;
+frontBoard.style.width = modifiedSize;
+frontBoard.style.height = modifiedSize;
+
 for (i = 0; i < boardProperties.boardSize; i++) {
     for (j = 0; j < boardProperties.boardSize; j++) {
         frontBoard.appendChild(backBoard[i][j].cell);
@@ -37,7 +41,7 @@ function nextGeneration() {
     //      Define if cell is alive or dead next turn
 
     // Temporal grid for storing next generation
-    const temporalGrid = generateTemporalGrid();
+    const temporalGrid = generateTemporalGrid(boardProperties.boardSize);
 
     // Iterate current board
     for (i = 0; i < boardProperties.boardSize; i++) {
@@ -93,6 +97,7 @@ function nextGeneration() {
 const startButton = document.querySelector("#start");
 const stopButton = document.querySelector("#stop");
 const resetButton = document.querySelector("#reset");
+const clearAllButton = document.querySelector("#clearBoard");
 
 let intervalID = undefined;
 
@@ -114,3 +119,11 @@ resetButton.addEventListener("click", () => {
     turnDeadCellsToBlack(backBoard);
 });
 
+clearAllButton.addEventListener("click", () => {
+    for (row of backBoard) {
+        for (cell of row) {
+            cell.life = 0;
+        }
+    }
+    turnDeadCellsToBlack(backBoard);
+})
