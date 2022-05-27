@@ -1,33 +1,38 @@
-// Return a 2D array that represents a grid filled with cells
-//      Each cell contains:
-//          - Dead or Alive status
-//          - A div (that will be appended to the DOM)
-//          - It's coordinates / position inside the grid
-function createBackBoard(boardSize = 50) {
+// Return 2D array representing the content of the game board. Each cell needs: 
+//      - Dead or Alive status
+//      - A div that will be appended to the DOM. Each div needs:
+//          - A click event listener to toggle Alive and Dead cells
+//          - Contain it's own coordinates - Storing i, j position as a class
+//          - The class "boardCell" - so I can select all cells later 
+//      - It's coordinates / position inside the grid, stored also as an attribute in the backBoard array
+function createBackBoard() {
+
+    const boardSize = gameState.boardSize;
+
+    // Nested loops with boardSize
     const backBoard = [];
     for (i = 0; i < boardSize; i++) {
         const row = []
         for (j = 0; j < boardSize; j++) {
-            const position = [i, j];
-            // const life = Math.random() > 0.5 ? 1 : 0;
+
+            // Create div
             const cell = document.createElement("div");
-
-            const iString = i.toString();
-            const jString = j.toString();
-
-            cell.classList.add(`${iString},${jString}`);
+            cell.classList.add(`${i.toString()},${j.toString()}`);
             cell.classList.add("boardCell");
-
+            
+            // Click event listener to toggle Cell's life
             cell.addEventListener("click", function(event){
                 toggleCellLife(backBoard, event);
             });
 
-            row.push({life: 0, cell: cell, position: position});
+            // Store
+            row.push({life: 0, cell: cell, position: [i, j]});
         }
         backBoard.push(row);
     }
     return backBoard;
 }
+
 
 function toggleCellLife(backBoard, event) {
     
@@ -43,11 +48,11 @@ function toggleCellLife(backBoard, event) {
     } else {
         backBoard[i][j].life = 1;
     }
-    turnDeadCellsToBlack(backBoard);
+    paintDeadAndAliveCells();
 }
 
 // Set the Board Size in the front page
-function adjustFrontBoardSize(gameState) {
+function adjustFrontBoardSize() {
     const cssBoardSize = `${gameState.cellSize * gameState.boardSize}px`;
     gameState.frontBoard.style.width = cssBoardSize;
     gameState.frontBoard.style.height = cssBoardSize;
@@ -56,7 +61,7 @@ function adjustFrontBoardSize(gameState) {
 
 // Append DIVS to frontBoard
 // CELL SIZE IS DEFINED JUST BEFORE APPENDING... I don't like that
-function appendCellsToFrontBoard(gameState) {
+function appendCellsToFrontBoard() {
     
     // Remove all existing childs from the frontBoard
     while (gameState.frontBoard.firstElementChild) {
@@ -113,7 +118,10 @@ const countAliveNeighbours = (cellPosition, gameState) => {
 }
 
 // Return empty temporal grid
-const generateTemporalGrid = (size = 40) => {
+const generateTemporalGrid = () => {
+
+    const size = gameState.boardSize;
+
     const tmpGrid = [];
     for (i = 0; i < size; i++) {
         const tmpRow = [];
@@ -192,7 +200,7 @@ function getWrapingChecklist(i, j) {
 }
 
 // Turn dead cells to black and alive cells to white
-function paintDeadAndAliveCells(gameState) {
+function paintDeadAndAliveCells() {
     const boardSize = gameState.backBoard.length;
     for (i = 0; i < boardSize; i++) {
         for (j = 0; j < boardSize; j++) {
@@ -206,7 +214,7 @@ function paintDeadAndAliveCells(gameState) {
 }
 
 // Fill backBoard with random death of alive cells
-function randomizeDeadAndAliveCells(gameState) {
+function randomizeDeadAndAliveCells() {
     for (row of gameState.backBoard) {
         for (cell of row) {
             const chance = gameState.aliveChance
