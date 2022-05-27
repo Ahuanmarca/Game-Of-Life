@@ -1,46 +1,22 @@
 // Object with variables needed by the functions
 const gameState = {
     boardSize: 50,
-    cellSize: 10,
+    cellSize: 5,
     frontBoard: document.querySelector("#gameBoard"),
     backBoard: createBackBoard(50),
     interval: 100,
-    alivePercentage: 0.5
+    aliveChance: 0.3,
+    wrap: true
 }
 
-// Create gameBoard representation, all cells are dead
-// gameState.backBoard = createBackBoard(gameState.boardSize);
-
-// Create a grid in the DOM, populate it with the backBoard cells
-// const frontBoard = document.querySelector("#gameBoard");
-
-// Adjust cell size
-// let cssCellSize = `${gameState.cellSize}px`
-// const frontBoardCells = document.querySelectorAll(".boardCell");
-// console.log(frontBoardCells);
-// let foo = document.querySelectorAll(".boardCell");
-// console.log(foo);
-// const frontBoardCells = document.querySelectorAll("#gameBoard > div");
-
-
-let cssBoardSize = `${gameState.cellSize * gameState.boardSize}px`;
-gameState.frontBoard.style.width = cssBoardSize;
-gameState.frontBoard.style.height = cssBoardSize;
-
-// Append DIVS to frontBoard
-for (i = 0; i < gameState.boardSize; i++) {
-    for (j = 0; j < gameState.boardSize; j++) {
-        let cssCellSize = `${gameState.cellSize}px`
-        gameState.backBoard[i][j].cell.style.width = cssCellSize;
-        gameState.backBoard[i][j].cell.style.height = cssCellSize;
-        gameState.frontBoard.appendChild(gameState.backBoard[i][j].cell);
-    }
+function buildBoard() {
+    adjustFrontBoardSize(gameState);
+    appendCellsToFrontBoard(gameState);
+    randomizeDeadAndAliveCells(gameState);
+    paintDeadAndAliveCells(gameState);
 }
 
-randomizeCells(gameState.backBoard);
-
-// Turn dead cells to black, alive cells to white
-turn_DeathBlack_AliveWhite(gameState.backBoard);
+buildBoard();
 
 function nextGeneration() {
 
@@ -59,8 +35,12 @@ function nextGeneration() {
             // Remember if cell is alive or dead
             const isAlive = gameState.backBoard[i][j].life
 
+            // Remember the cell's position
+            const cellPosition = [i, j];
+
             // Count alive neighbours
-            const aliveNeighbours = checkNeighbours(gameState.backBoard[i][j], gameState.backBoard);
+            const aliveNeighbours = countAliveNeighbours(cellPosition, gameState);
+            // const aliveNeighbours = countAliveNeighbours(gameState.backBoard[i][j], gameState.backBoard);
             
             // Save new cell status to Temporal Grid
             if (isAlive == 1) {
@@ -76,13 +56,8 @@ function nextGeneration() {
                     temporalGrid[i][j] = 0
                 }
             }
-
-            // Console Logs
-            // console.log(isAlive)
-            // console.log(aliveNeighbours)
         }
     }
-    // console.log(temporalGrid);
 
     for (i = 0; i < gameState.boardSize; i++) {
         for (j = 0; j < gameState.boardSize; j++) {
@@ -90,7 +65,7 @@ function nextGeneration() {
         }
     }
 
-    turn_DeathBlack_AliveWhite(gameState.backBoard);
+    paintDeadAndAliveCells(gameState);
 }
 
 
@@ -125,8 +100,8 @@ stopButton.addEventListener("click", () => {
 });
 
 resetButton.addEventListener("click", () => {
-    randomizeCells(gameState.backBoard);
-    turn_DeathBlack_AliveWhite(gameState.backBoard);
+    randomizeDeadAndAliveCells(gameState);
+    paintDeadAndAliveCells(gameState);
 });
 
 clearAllButton.addEventListener("click", () => {
@@ -135,40 +110,20 @@ clearAllButton.addEventListener("click", () => {
             cell.life = 0;
         }
     }
-    turn_DeathBlack_AliveWhite(gameState.backBoard);
+    paintDeadAndAliveCells(gameState);
 });
 
 boardSizeForm.addEventListener("submit", (event) => {
+
     event.preventDefault();
-    const newSize = event.target.elements.boardSizeInput.value;
 
-    // Rebuild the backBoard
-    gameState.backBoard = createBackBoard(newSize);
-    randomizeCells(gameState.backBoard);
-    
-    // Rebuild the frontBoard
-    
-    // Remove all childs from the frontBoard
-    while (gameState.frontBoard.firstElementChild) {
-        gameState.frontBoard.removeChild(gameState.frontBoard.firstElementChild);
-    }
-    
-    // Change the CSS size of the board
-    let newSizeStr = `${10 * newSize}px`;
-    gameState.frontBoard.style.width = newSizeStr;
-    gameState.frontBoard.style.height = newSizeStr;
-    
-    // Append new childs to the frontBoard
-    for (i = 0; i < newSize; i++) {
-        for (j = 0; j < newSize; j++) {
-            gameState.frontBoard.appendChild(gameState.backBoard[i][j].cell);
-        }
-    }
+    // Update board size on properties
+    gameState.boardSize= event.target.elements.boardSizeInput.value;
 
-    // Turn death cells to black and white cells to white
-    turn_DeathBlack_AliveWhite(gameState.backBoard);    
+    // Update (rebuild) the backBoard with new size
+    gameState.backBoard = createBackBoard(gameState.boardSize);
 
-    // Update size propertie at the top
-    gameState.boardSize= newSize;
-    console.log(gameState.boardSize);
+    // Rebuild the whole board with new size
+    buildBoard();
+
 });
