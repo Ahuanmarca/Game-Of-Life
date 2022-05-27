@@ -6,11 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Of Life - Static</title>
 
+    <link rel="stylesheet" href="bootstrap/bootstrap.css">
     <link rel="stylesheet" href="styles.css">
+
+
+
+
+
 </head>
 <body>
 
     <main class="container">
+
+        <section>
+            <h1>Conway's Game of Life</h1>
+            
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button id="start" class="btn btn-outline-light topButtons">Start</button>
+                <button id="stop" class="btn btn-outline-light topButtons">Stop</button>
+                <button id="reset" class="btn btn-outline-light topButtons">Reset</button>
+                <button id="clearBoard" class="btn btn-outline-light topButtons">Clear</button>
+            </div>
+
+            <br><br>
+
+            <label for="boardSizeInput">Board Size: <span id="showSize">50</span></label>
+            <br>
+            <input class="form-range" type="range" name="boardSizeInput" id="boardSizeInput" min="10" max="100" value="50">
+            <br>
+
+            <label for="">Population: <span id="showPopulation">30</span></label>
+            <br>
+            <input class="form-range" type="range" name="populationInput" id="populationInput" min="10" max="90" value="30">
+            <br>
+
+            <!-- <br> -->
+            <label for="speedInput">Speed: <span id="showSpeed">50</span></label>
+            <br>
+            <input class="form-range" type="range" name="speedInput" id="speedInput" min="1" max="100" value="50">
+            <!-- <input type="range" name="speedSlider" id="speedSlider" min="1" max="10" step="0.1"> -->
+            <br><br>
+
+            <div class="form-check form-switch">
+                <label for="wrapSwitch">Wrap</label>
+                <input class="form-check-input" role="switch" type="checkbox" name="wrapSwitch" id="wrapSwitch" checked>
+            </div>
+        </section>
+
         <section>
             <!-- GRID -->
             <div id="gameBoard">
@@ -18,38 +60,12 @@
             </div>
 
         </section>
-        <section>
-            <h1>Conway's Game of Life</h1>
-            
-            <button id="start">Start</button>
-            <button id="stop">Stop</button>
-            <button id="reset">Reset</button>
-            <button id="clearBoard">Clear Board</button>
-            <br><br>
-
-            <label for="boardSizeInput">Board Size: <span id="showSize">50</span></label>
-            <br>
-            <input type="range" name="boardSizeInput" id="boardSizeInput" min="10" max="100" value="50">
-            <br>
-
-            <label for="">Population: <span id="showPopulation">30</span></label>
-            <br>
-            <input type="range" name="populationInput" id="populationInput" min="10" max="90" value="30">
-            <br>
-
-            <!-- <br> -->
-            <label for="speedInput">Speed: <span id="showSpeed">50</span></label>
-            <br>
-            <input type="range" name="speedInput" id="speedInput" min="1" max="100" value="50">
-            <!-- <input type="range" name="speedSlider" id="speedSlider" min="1" max="10" step="0.1"> -->
-            <br>
-
-            <label for="wrapSwitch">Wrap</label>
-            <input type="checkbox" name="wrapSwitch" id="wrapSwitch" checked>
-        </section>
     </main>
 
     <script src="helpers.js"></script>
     <script src="app.js"></script>
+
+    <script src="bootstrap/bootstrap.js"></script>
+
 </body>
 </html>

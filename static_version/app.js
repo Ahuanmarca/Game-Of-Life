@@ -1,7 +1,7 @@
 // Object with variables needed by the functions
 const gameState = {
     boardSize: 50,
-    cellSize: 5,
+    cellSize: 7,
     frontBoard: document.querySelector("#gameBoard"),
     backBoard: undefined,
     speed: 50,
@@ -136,18 +136,6 @@ clearAllButton.addEventListener("click", () => {
     }
     paintDeadAndAliveCells();
 });
-
-// boardSizeForm.addEventListener("submit", (event) => {
-//     event.preventDefault();
-//     if (gameState.boardSize != event.target.elements.boardSizeInput.value) {
-//         // Update board size on properties
-//         gameState.boardSize= event.target.elements.boardSizeInput.value;
-//         // Update (rebuild) the backBoard with new size
-//         gameState.backBoard = createBackBoard(gameState.boardSize);
-//         // Rebuild the whole board with new size
-//         buildBoard();
-//     }
-// });
 
 const boardSizeSlider = document.querySelector("#boardSizeInput");
 boardSizeSlider.addEventListener("input", function() {

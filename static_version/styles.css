@@ -33,3 +33,7 @@ body {
 }
 
 
+.topButtons {
+    width: 125px;
+    /* outline: none; */
+}
