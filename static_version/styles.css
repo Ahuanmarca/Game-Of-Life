@@ -1,5 +1,6 @@
 body {
-    background-color: black;
+    /* background-color: black; */
+    background-color: rgb(29, 43, 66);
     color: white;
     font-family: 'Courier New', Courier, monospace;
 }
@@ -9,7 +10,7 @@ body {
     padding: 50px;
     width: 100%;
     justify-content: center;
-    background-color: darkslategray;
+    /* background-color: darkslategray; */
 }
 
 .container > section {

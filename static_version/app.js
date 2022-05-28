@@ -1,7 +1,7 @@
 // Object with variables needed by the functions
 const gameState = {
     boardSize: 50,
-    cellSize: 7,
+    cellSize: 10,
     frontBoard: document.querySelector("#gameBoard"),
     backBoard: undefined,
     speed: 50,
@@ -99,11 +99,20 @@ const boardSizeForm = document.querySelector("#boardSizeForm");
 const wrapSwitch = document.querySelector("#wrapSwitch");
 const speedSlider = document.querySelector("#speedInput");
 const populationSlider = document.querySelector("#populationInput");
+const topButtons = document.querySelectorAll(".topButtons");
 
 let intervalID = undefined;
 
+for (btn of topButtons) {
+    btn.addEventListener("mouseup", function () {
+        setTimeout(() => {
+            this.blur();
+        }, 100)
+    })
+}
+
 startButton.addEventListener("click", () => {
-    startSimulation();
+    startSimulation();    
 });
 
 function startSimulation() {
