@@ -14,42 +14,54 @@
 
     <main class="container">
 
-        <section>
-            <h1>Conway's Game of Life</h1>
+        <section id="controlPanelSection">
+
+            <div>
+                <div>
+                    <h1>Conway's Game of Life</h1>
+                </div>
+                <div>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button id="start" class="btn btn-outline-light topButtons">Start</button>
+                        <button id="stop" class="btn btn-outline-light topButtons">Stop</button>
+                        <button id="reset" class="btn btn-outline-light topButtons">Reset</button>
+                        <button id="clearBoard" class="btn btn-outline-light topButtons">Clear</button>
+                    </div>
+                </div>
+            </div>
             
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button id="start" class="btn btn-outline-light topButtons">Start</button>
-                <button id="stop" class="btn btn-outline-light topButtons">Stop</button>
-                <button id="reset" class="btn btn-outline-light topButtons">Reset</button>
-                <button id="clearBoard" class="btn btn-outline-light topButtons">Clear</button>
+
+            
+
+            <div>
+                <div>
+                    <label for="boardSizeInput">Board Size: <span id="showSize">50</span></label>
+                    <br>
+                    <input class="form-range" type="range" name="boardSizeInput" id="boardSizeInput" min="10" max="100" value="50">
+                </div>
+
+                <div>
+                    <label for="">Population: <span id="showPopulation">30</span></label>
+                    <br>
+                    <input class="form-range" type="range" name="populationInput" id="populationInput" min="10" max="90" value="30">
+                </div>
+
+                <div>
+                    <label for="speedInput">Speed: <span id="showSpeed">50</span></label>
+                    <br>
+                    <input class="form-range" type="range" name="speedInput" id="speedInput" min="1" max="100" value="50">
+                </div>
             </div>
 
-            <br><br>
-
-            <label for="boardSizeInput">Board Size: <span id="showSize">50</span></label>
-            <br>
-            <input class="form-range" type="range" name="boardSizeInput" id="boardSizeInput" min="10" max="100" value="50">
-            <br>
-
-            <label for="">Population: <span id="showPopulation">30</span></label>
-            <br>
-            <input class="form-range" type="range" name="populationInput" id="populationInput" min="10" max="90" value="30">
-            <br>
-
-            <!-- <br> -->
-            <label for="speedInput">Speed: <span id="showSpeed">50</span></label>
-            <br>
-            <input class="form-range" type="range" name="speedInput" id="speedInput" min="1" max="100" value="50">
-            <!-- <input type="range" name="speedSlider" id="speedSlider" min="1" max="10" step="0.1"> -->
-            <br><br>
-
-            <div class="form-check form-switch">
-                <label for="wrapSwitch">Wrap</label>
-                <input class="form-check-input" role="switch" type="checkbox" name="wrapSwitch" id="wrapSwitch" checked>
+            <div>
+                <div class="form-check form-switch">
+                    <label for="wrapSwitch">Wrap</label>
+                    <input class="form-check-input" role="switch" type="checkbox" name="wrapSwitch" id="wrapSwitch" checked>
+                </div>
             </div>
         </section>
 
-        <section>
+        <section id="boardSection">
             <!-- GRID -->
             <div id="gameBoard">
                 <!-- Plug cells in here! -->
