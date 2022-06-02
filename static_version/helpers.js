@@ -41,14 +41,8 @@ function toggleCellLife(backBoard, event) {
 
     // console.log(event.target.classList[0], backBoard);
     console.log(i, j, backBoard);
-
-    const isAlive = backBoard[i][j].life;
-    if (isAlive) {
-        backBoard[i][j].life = 0;
-    } else {
-        backBoard[i][j].life = 1;
-    }
-    paintDeadAndAliveCells();
+    backBoard[i][j].life = !backBoard[i][j].life;
+    event.target.style.backgroundColor = backBoard[i][j].life ? "white" : "black";
 }
 
 // Set the Board Size in the front page

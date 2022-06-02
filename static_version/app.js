@@ -1,7 +1,7 @@
 // Object with variables needed by the functions
 const gameState = {
-    boardSize: 50,
-    cellSize: 10,
+    boardSize: 50, // Units are cells
+    cellSize: 10, // Units are pixles
     frontBoard: document.querySelector("#gameBoard"),
     backBoard: undefined,
     speed: 50,
